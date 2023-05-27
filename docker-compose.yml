@@ -1,0 +1,86 @@
+version: '3'
+
+services:
+
+  mongo-db:
+    image: mongo:latest
+    ports:
+      - "27017:27017"
+    networks:
+      - survey-network
+
+  discovery-service:
+    build:
+      context: ./discovery-service
+      dockerfile: Dockerfile
+    ports:
+      - "8761:8761"
+    volumes:
+      - "${HOME}/.m2:/root/.m2"
+    networks:
+      - survey-network
+
+  api-gateway:
+    build:
+      context: ./api-gateway
+      dockerfile: Dockerfile
+    ports:
+      - "9090:9090"
+    volumes:
+      - "${HOME}/.m2:/root/.m2"
+    environment:
+      EUREKA_CLIENT_SERVICEURL_DEFAULTZONE: http://discovery-service:8761/eureka
+    depends_on:
+      - discovery-service
+    networks:
+      - survey-network
+
+  answer-service:
+    build:
+      context: ./answer-service
+      dockerfile: Dockerfile
+    deploy:
+      resources:
+        limits:
+          cpus: '2.0'
+          memory: 2048M
+        reservations:
+          cpus: '2.0'
+          memory: 2048M
+    #    ports:
+    #      - "9091:9091"
+    volumes:
+      - "${HOME}/.m2:/root/.m2"
+    environment: # Pass environment variables to the service
+      SPRING_DATA_MONGODB_HOST: mongo-db
+      SPRING_DATA_MONGODB_PORT: 27017
+      SPRING_DATA_MONGODB_DATABASE: surveydb
+      EUREKA_CLIENT_SERVICEURL_DEFAULTZONE: http://discovery-service:8761/eureka
+    depends_on:
+      - mongo-db
+      - discovery-service
+    networks:
+      - survey-network
+
+  survey-service:
+    build:
+      context: ./survey-service
+      dockerfile: Dockerfile
+    #    ports:
+    #      - "9092:9092"
+    volumes:
+      - "${HOME}/.m2:/root/.m2"
+    environment: # Pass environment variables to the service
+      SPRING_DATA_MONGODB_HOST: mongo-db
+      SPRING_DATA_MONGODB_PORT: 27017
+      SPRING_DATA_MONGODB_DATABASE: surveydb
+      EUREKA_CLIENT_SERVICEURL_DEFAULTZONE: http://discovery-service:8761/eureka
+    depends_on:
+      - mongo-db
+      - discovery-service
+    networks:
+      - survey-network
+
+
+networks:
+  survey-network:
