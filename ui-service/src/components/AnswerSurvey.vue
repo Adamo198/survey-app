@@ -30,7 +30,7 @@
           :label="'Last Name:'"
           path="answer"
       >
-        <n-input v-model:value="answer.lastName" type="text" placeholder="LastName"/>
+        <n-input v-model:value="answer.lastName" type="text" placeholder="Last Name"/>
       </n-form-item>
 
       <n-form-item

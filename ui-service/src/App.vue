@@ -1,8 +1,8 @@
 <template>
 <!--  <nav>-->
     <div class="nav">
-      <router-link to="/">Creator</router-link> |
-      <router-link to="/survey">Answerer</router-link> |
+      <router-link to="/">Create</router-link> |
+      <router-link to="/survey">Answer</router-link> |
       <router-link to="/answer">Results</router-link>
     </div>
     <router-view />

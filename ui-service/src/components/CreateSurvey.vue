@@ -32,7 +32,7 @@
               <van-cell title="Question type">
                 <van-radio-group v-model="q.type">
                   <van-radio name="text">Text</van-radio>
-                  <van-radio name="radio">Radio</van-radio>
+                  <van-radio name="radio">Single-Choice</van-radio>
                 </van-radio-group>
               </van-cell>
             </div>
@@ -59,8 +59,8 @@
 
         </van-cell-group>
 
-        <div style="margin: 16px; padding-left: 50%">
-          <van-button @click="addQuestion" icon="plus" color="green" type="primary">Add Question
+        <div style="margin: 16px; padding-left: 70% ; padding-right: 5%">
+          <van-button round block @click="addQuestion" icon="plus" color="green" type="primary">Add Question
           </van-button>
         </div>
         <div style="margin: 16px; padding-left: 30% ; padding-right: 30%">
@@ -128,9 +128,9 @@ export default {
         let responseId = await res.json();
         console.log(res)
         console.log(responseId.id)
-        alert("Survey sent!" + responseId.id)
+        alert("Survey sent! Please use this ID:    " + responseId.id)
       } else {
-        alert("Error during send")
+        alert("Error during send, try again!")
       }
     }
   }
