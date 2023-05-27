@@ -47,8 +47,8 @@ services:
         reservations:
           cpus: '2.0'
           memory: 2048M
-    #    ports:
-    #      - "9091:9091"
+#    ports:
+#      - "9091:9091"
     volumes:
       - "${HOME}/.m2:/root/.m2"
     environment: # Pass environment variables to the service
@@ -66,8 +66,8 @@ services:
     build:
       context: ./survey-service
       dockerfile: Dockerfile
-    #    ports:
-    #      - "9092:9092"
+#    ports:
+#      - "9092:9092"
     volumes:
       - "${HOME}/.m2:/root/.m2"
     environment: # Pass environment variables to the service
@@ -80,7 +80,23 @@ services:
       - discovery-service
     networks:
       - survey-network
-
+      
+  ui-service:
+    build:
+      context: ./ui-service
+      dockerfile: Dockerfile
+    ports:
+      - "8080:8080"
+    container_name: ui-service
+    volumes:
+       - ./ui-service:/usr/src/app/ui-service
+       - /usr/src/app/ui-service/node_modules
+    depends_on:
+      - mongo-db
+      - discovery-service
+    networks:
+      - survey-network
+    
 
 networks:
   survey-network:
