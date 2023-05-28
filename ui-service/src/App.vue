@@ -1,9 +1,10 @@
 <template>
 <!--  <nav>-->
     <div class="nav">
-      <router-link to="/">Create</router-link> |
+      <router-link to="/">Create Survey</router-link> |
       <router-link to="/survey">Answer</router-link> |
-      <router-link to="/answer">Results</router-link>
+      <router-link to="/answer">Results</router-link> |
+      <router-link to="/catbonus">Make Yourself Smile!</router-link>
     </div>
     <router-view />
 <!--  </nav>-->

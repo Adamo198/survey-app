@@ -1,5 +1,6 @@
 <template>
   <div class="main">
+    <h1>Check The Results</h1>
     <h1>{{$route.query.surveyId}}</h1>
     <div v-if="$route.query.surveyId === undefined">
       <n-input-group >

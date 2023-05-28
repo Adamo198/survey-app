@@ -2,10 +2,17 @@ version: '3'
 
 services:
 
-  mongo-db:
+  mongo-db-surveys:
     image: mongo:latest
     ports:
       - "27017:27017"
+    networks:
+      - survey-network
+
+  mongo-db-images:
+    image: mongo:latest
+    ports:
+      - "27018:27017"
     networks:
       - survey-network
 
@@ -52,12 +59,12 @@ services:
     volumes:
       - "${HOME}/.m2:/root/.m2"
     environment: # Pass environment variables to the service
-      SPRING_DATA_MONGODB_HOST: mongo-db
+      SPRING_DATA_MONGODB_HOST: mongo-db-surveys
       SPRING_DATA_MONGODB_PORT: 27017
       SPRING_DATA_MONGODB_DATABASE: surveydb
       EUREKA_CLIENT_SERVICEURL_DEFAULTZONE: http://discovery-service:8761/eureka
     depends_on:
-      - mongo-db
+      - mongo-db-surveys
       - discovery-service
     networks:
       - survey-network
@@ -71,16 +78,34 @@ services:
     volumes:
       - "${HOME}/.m2:/root/.m2"
     environment: # Pass environment variables to the service
-      SPRING_DATA_MONGODB_HOST: mongo-db
+      SPRING_DATA_MONGODB_HOST: mongo-db-surveys
       SPRING_DATA_MONGODB_PORT: 27017
       SPRING_DATA_MONGODB_DATABASE: surveydb
       EUREKA_CLIENT_SERVICEURL_DEFAULTZONE: http://discovery-service:8761/eureka
     depends_on:
-      - mongo-db
+      - mongo-db-surveys
       - discovery-service
     networks:
       - survey-network
-      
+
+  images-service:
+    build:
+      context: ./images-service
+      dockerfile: Dockerfile
+    volumes:
+      - "${HOME}/.m2:/root/.m2"
+    environment: # Pass environment variables to the service
+      SPRING_DATA_MONGODB_HOST: mongo-db-images
+      SPRING_DATA_MONGODB_PORT: 27017
+      SPRING_DATA_MONGODB_DATABASE: imagesdb
+      EUREKA_CLIENT_SERVICEURL_DEFAULTZONE: http://discovery-service:8761/eureka
+    depends_on:
+      - mongo-db-surveys
+      - discovery-service
+      - mongo-db-images
+    networks:
+      - survey-network
+
   ui-service:
     build:
       context: ./ui-service
@@ -92,8 +117,9 @@ services:
        - ./ui-service:/usr/src/app/ui-service
        - /usr/src/app/ui-service/node_modules
     depends_on:
-      - mongo-db
+      - mongo-db-surveys
       - discovery-service
+      - mongo-db-images
     networks:
       - survey-network
     

@@ -1,7 +1,7 @@
 <template>
   <div class="main">
     <div v-if="$route.params.id === ''">
-
+      <h1>Choose Survey And Send Your Answers</h1>
       <n-input-group>
         <n-input v-model:value="id" type="text" placeholder="Find Survey By ID"/>
         <n-button size="small" color="green" @click="findSurvey(id)">Find</n-button>
@@ -67,7 +67,7 @@
       </div>
 
       <div style="display: flex; justify-content: flex-end">
-        <n-button round type="primary" @click="sendAnswer">
+        <n-button round type="primary" color="green" @click="sendAnswer">
           Send Answer
         </n-button>
       </div>

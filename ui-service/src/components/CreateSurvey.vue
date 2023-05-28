@@ -1,4 +1,7 @@
 <template>
+  <div>
+    <h1>Prepare Your Survey</h1>
+  </div>
   <van-row justify="center">
     <van-col span="10">
       <van-form @submit="onSubmit">
@@ -139,7 +142,7 @@ export default {
 
 <style scoped>
 .cs-block {
-  margin: 10%;
+  margin: 2%;
   border: solid 1px dimgrey;
 }
 

@@ -25,6 +25,10 @@ spring:
           uri: lb://answer-service
           predicates:
             - Path=/api/answer/**
+        - id: images-service
+          uri: lb://images-service
+          predicates:
+            - Path=/api/images/**
 
 eureka:
   client:

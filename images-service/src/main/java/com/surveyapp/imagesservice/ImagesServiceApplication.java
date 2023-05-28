@@ -1,4 +1,4 @@
-package com.surveyapp.surveyservice;
+package com.surveyapp.imagesservice;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -6,10 +6,10 @@ import org.springframework.cloud.netflix.eureka.EnableEurekaClient;
 
 @EnableEurekaClient
 @SpringBootApplication
-public class SurveyServiceApplication {
+public class ImagesServiceApplication {
 
 	public static void main(String[] args) {
-		SpringApplication.run(SurveyServiceApplication.class, args);
+		SpringApplication.run(ImagesServiceApplication.class, args);
 	}
 
 }
