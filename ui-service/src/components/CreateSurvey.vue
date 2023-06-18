@@ -1,4 +1,5 @@
 <template>
+<div>
   <div>
     <h1>Prepare Your Survey</h1>
   </div>
@@ -7,13 +8,13 @@
       <van-form @submit="onSubmit">
         <div class="cs-block">
           <van-cell-group inset>
-            <van-field
+            <!-- <van-field
                 v-model="email"
                 name="email"
                 label="Email"
                 placeholder="Email"
                 :rules="[{ required: true, message: 'Email is required' }]"
-            />
+            /> -->
             <van-field
                 v-model="title"
                 type="title"
@@ -74,13 +75,18 @@
       </van-form>
     </van-col>
   </van-row>
+</div>
 </template>
 
 <script>
 
+import { getAuthorization } from '@/services/auth-header';
 
 export default {
   name: "CreateSurvey",
+  // currentUser() {
+  //     return this.$store.state.auth.user;
+  //   },
   data() {
     return {
       questions: [],
@@ -111,7 +117,7 @@ export default {
       console.log(e)
       // e.preventDefault()
       const surveyReq = {
-        email: this.email,
+        email: this.$store.state.auth.user.email,
         title: this.title,
         questions: this.questions
       }
@@ -121,6 +127,7 @@ export default {
             method: 'POST',
             headers: {
               'Content-type': 'application/json',
+              'Authorization': getAuthorization()
             },
             body: JSON.stringify(surveyReq),
           })

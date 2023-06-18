@@ -5,9 +5,14 @@ import {Form, Field, CellGroup, Button, Cell} from 'vant';
 import { Col, Row } from 'vant';
 import { RadioGroup, Radio } from 'vant';
 import { Tabbar, TabbarItem } from 'vant';
+import store from './store';
+import "bootstrap";
+import "bootstrap/dist/css/bootstrap.min.css";
+import { FontAwesomeIcon } from './plugins/font-awesome'
 
 const app = createApp(App);
 app.use(router)
+    .use(store)
     .use(Form)
     .use(Cell)
     .use(Field)
@@ -16,4 +21,5 @@ app.use(router)
     .use(RadioGroup)
     .use(Radio)
     .use(Col).use(Row).use(Tabbar).use(TabbarItem)
+    .component("font-awesome-icon", FontAwesomeIcon)
     .mount('#app')
