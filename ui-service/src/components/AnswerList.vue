@@ -26,6 +26,7 @@
 
 
 import {NButton, NCollapse, NCollapseItem, NInput, NInputGroup} from "naive-ui";
+import { getAuthorization } from '@/services/auth-header';
 
 export default {
   name: "AnswerList",
@@ -39,7 +40,13 @@ export default {
   },
   methods: {
     async getAnswersBySurveyId(id) {
-      const res = await fetch("/api/answer/search/findAllBySurveyId?surveyId=" + id)
+      const res = await fetch(
+      "/api/answer/search/findAllBySurveyId?surveyId=" + id,
+{method: "GET", 
+headers: {
+              'Authorization': getAuthorization()
+            }
+            })
       if (res.status === 200) {
         const response =  await res.json()
         console.log(response)

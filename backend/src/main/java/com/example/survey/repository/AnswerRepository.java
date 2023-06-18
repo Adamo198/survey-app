@@ -15,7 +15,10 @@ public interface AnswerRepository  extends JpaRepository<Answer, String> {
 	List<Answer> findAllBySurveyTitle(String title);
 
 	List<Answer> findAllBySurveyId(String surveyId);
-
+	
+	@Override
+	Answer save(Answer answer);
+	
 	@Override
 	List<Answer> findAllById(Iterable<String> strings);
 }

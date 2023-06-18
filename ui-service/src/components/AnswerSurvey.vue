@@ -33,13 +33,13 @@
         <n-input v-model:value="answer.lastName" type="text" placeholder="Last Name"/>
       </n-form-item>
 
-      <n-form-item
+      <!-- <n-form-item
           :span="12"
           :label="'Email:'"
           path="answer"
       >
-        <n-input v-model:value="answer.email" type="text" placeholder="Email"/>
-      </n-form-item>
+        <n-input v-if="!currentUser" v-model:value="answer.email" type="text" placeholder="Email"/>
+      </n-form-item> -->
 
       <div v-for="(q,index) in survey.questions" v-bind:key="index">
         <n-form-item
@@ -80,10 +80,16 @@
 
 <script>
 import {NButton, NForm, NFormItem, NInput, NInputGroup, NRadio, NRadioGroup} from "naive-ui";
+import { getAuthorization } from '@/services/auth-header';
 
 export default {
   name: "AnswerSurvey",
   components: {NInput, NButton, NForm, NFormItem, NInputGroup, NRadioGroup, NRadio},
+  computed: {
+    currentUser() {
+      return this.$store.state.auth.user;
+    },
+  },
   data() {
     return {
       id: "",
@@ -123,7 +129,7 @@ export default {
         surveyId: this.id,
         name: this.answer.name,
         lastName: this.answer.lastName,
-        email: this.answer.email,
+        email: this.currentUser ? this.currentUser.email : 'anonim',
         entries: this.prepareAnswerEntry()
       }
       console.log(req)
@@ -131,6 +137,7 @@ export default {
         method: 'POST',
         headers: {
           'Content-type': 'application/json',
+          'Authorization': getAuthorization()
         },
         body: JSON.stringify(req),
       })
