@@ -2,13 +2,9 @@
   <div class="container">
     <header class="jumbotron">
       <h3>
-        <strong>{{currentUser.username}}</strong> Profile
+        <strong>{{currentUser.username}}</strong>
       </h3>
     </header>
-    <p>
-      <strong>Token:</strong>
-      {{currentUser.accessToken.substring(0, 20)}} ... {{currentUser.accessToken.substr(currentUser.accessToken.length - 20)}}
-    </p>
     <p>
       <strong>Id:</strong>
       {{currentUser.id}}
@@ -17,18 +13,15 @@
       <strong>Email:</strong>
       {{currentUser.email}}
     </p>
-    <strong>Authorities:</strong>
-    <ul>
-      <li v-for="role in currentUser.roles" :key="role">{{role}}</li>
-    </ul>
     <div class="">
-    <p>Ankiety</p>
+    <p>Lista ankiet</p>
       <ul class="list-group">
         <li class="list-group-item" v-for="survey in surveys" :key="survey.id">
           <div class="container-sm">
             <div class="row row-cols-auto">
-            <p class="col-auto me-auto">{{ survey.title }}</p>
-            <button type="button" class="btn btn-danger col-auto" @click="removeSurvey(survey.id)">remove</button>
+            <p class="col-auto me-auto">Id: {{ survey.id }}, Tytuł: {{ survey.title }}</p>
+            <router-link type="button" class="btn btn-danger col-auto" :to="`/answer/${survey.id}`" >odpowiedzi</router-link>
+            <button type="button" class="btn btn-danger col-auto" @click="removeSurvey(survey.id)">usuń</button>
             <!-- <van-button block size="mini" @click="removeSurvey" icon="cross" color="red" type="primary">
             </van-button> -->
             </div>
@@ -45,10 +38,7 @@ export default {
   name: 'Profile',
   data() {
     return {
-      surveys: [
-        {id: 1, email: "jacek@jacek.com", title: "Ankieta o pogodzie"},
-        {id: 2, email: "jacek@jacek.com", title: "Ankieta 2"}
-      ]
+      surveys: []
     }
   },
   computed: {
@@ -96,8 +86,8 @@ export default {
       const deleteReq = {
         email: this.$store.state.auth.user.email
       }
-      // console.log(deleteReq)
-      const res = await fetch('api/survey?email=' + this.$store.state.auth.user.email,
+      console.log(deleteReq)
+      const res = await fetch('api/survey/search/findByEmail?email=' + this.$store.state.auth.user.email,
           {
             method: 'GET',
             headers: {

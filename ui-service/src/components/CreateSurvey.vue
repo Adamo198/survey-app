@@ -1,7 +1,7 @@
 <template>
 <div>
   <div>
-    <h1>Prepare Your Survey</h1>
+    <h1>Tworzenie ankiety</h1>
   </div>
   <van-row justify="center">
     <van-col span="10">
@@ -19,9 +19,9 @@
                 v-model="title"
                 type="title"
                 name="title"
-                label="Title"
-                placeholder="Survey Title"
-                :rules="[{ required: true, message: 'Title is required' }]"
+                label="Tytuł"
+                placeholder="Tytuł ankiety"
+                :rules="[{ required: true, message: 'Tytuł jest wymagany' }]"
             />
           </van-cell-group>
         </div>
@@ -30,13 +30,13 @@
           <div v-for="(q, index) in questions" :key="index" class="cs-question">
             <div class="cs-block">
               <van-cell>
-                <van-field v-model="q.name" label="Question" placeholder="Question" :rules="[{ required: true, message: 'Question is required' }]"/>
+                <van-field v-model="q.name" label="Pytanie" placeholder="Pytanie" :rules="[{ required: true, message: 'Wymagane pytanie' }]"/>
               </van-cell>
 
-              <van-cell title="Question type">
+              <van-cell title="Rodzaj odpowiedzi">
                 <van-radio-group v-model="q.type">
-                  <van-radio name="text">Text</van-radio>
-                  <van-radio name="radio">Single-Choice</van-radio>
+                  <van-radio name="text">Tekst</van-radio>
+                  <van-radio name="radio">Jednokrotny wybór</van-radio>
                 </van-radio-group>
               </van-cell>
             </div>
@@ -45,7 +45,7 @@
               <van-row class="option-one" justify="space-between" v-for="(opt, index) in q.options"
                        v-bind:key="index">
                 <van-col>
-                  <van-field v-model="opt.text" label="Option" placeholder="Option" :rules="[{ required: true, message: 'Option is required' }]"/>
+                  <van-field v-model="opt.text" label="Odpowiedź" placeholder="Odpowiedź" :rules="[{ required: true, message: 'Wymagana odpowiedź' }]"/>
                 </van-col>
                 <van-col class="center">
                   <van-button @click="deleteOption(q, index)" size="mini" icon-position="right"
@@ -64,12 +64,12 @@
         </van-cell-group>
 
         <div style="margin: 16px; padding-left: 70% ; padding-right: 5%">
-          <van-button round block @click="addQuestion" icon="plus" color="green" type="primary">Add Question
+          <van-button  @click="addQuestion" icon="plus" color="green" type="primary">Dodaj pytanie
           </van-button>
         </div>
         <div style="margin: 16px; padding-left: 30% ; padding-right: 30%">
           <van-button round block type="primary" native-type="submit">
-            Submit
+            Utwórz
           </van-button>
         </div>
       </van-form>
@@ -138,9 +138,9 @@ export default {
         let responseId = await res.json();
         console.log(res)
         console.log(responseId.id)
-        alert("Survey sent! Please use this ID:    " + responseId.id)
+        alert("Utworzono ankietę z id: " + responseId.id)
       } else {
-        alert("Error during send, try again!")
+        alert("Błąd podczas tworzenia ankiety!")
       }
     }
   }

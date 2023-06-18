@@ -32,7 +32,7 @@ const routes = [
     component: AnswerSurvey
   },
   {
-    path: '/answer',
+    path: '/answer/:id?',
     name: 'answer',
     component: AnswerList
   },

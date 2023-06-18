@@ -32,6 +32,6 @@ public interface SurveyRepository extends JpaRepository<Survey, String> {
 	Optional<Survey> findById(String s);
 
 //	@Override
-	List<Survey> findAllByEmail(@Param("email") String email);
+	List<Survey> findByEmail(@Param("email") String email);
 }
 

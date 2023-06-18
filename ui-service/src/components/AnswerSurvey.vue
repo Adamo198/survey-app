@@ -1,10 +1,10 @@
 <template>
   <div class="main">
     <div v-if="$route.params.id === ''">
-      <h1>Choose Survey And Send Your Answers</h1>
+      <h1>Podaj id ankiety</h1>
       <n-input-group>
-        <n-input v-model:value="id" type="text" placeholder="Find Survey By ID"/>
-        <n-button size="small" color="green" @click="findSurvey(id)">Find</n-button>
+        <n-input v-model:value="id" type="text" placeholder="Id ankiety"/>
+        <n-button size="small" color="green" @click="findSurvey(id)">Wyszukaj</n-button>
       </n-input-group>
     </div>
 
@@ -16,21 +16,21 @@
         size="medium"
         class="form"
     >
-      <h2>Title: {{ this.survey.title }}</h2>
+      <h2>Tytuł: {{ this.survey.title }}</h2>
 
       <n-form-item
           :span="12"
-          :label="'Name:'"
+          :label="'Imię:'"
           path="answer"
       >
-        <n-input v-model:value="answer.name" type="text" placeholder="Name"/>
+        <n-input v-model:value="answer.name" type="text" placeholder="Imię"/>
       </n-form-item>
       <n-form-item
           :span="12"
-          :label="'Last Name:'"
+          :label="'Nazwisko:'"
           path="answer"
       >
-        <n-input v-model:value="answer.lastName" type="text" placeholder="Last Name"/>
+        <n-input v-model:value="answer.lastName" type="text" placeholder="Nazwisko"/>
       </n-form-item>
 
       <!-- <n-form-item
@@ -62,13 +62,13 @@
             path="survey"
             v-if="q.type === 'text'"
         >
-          <n-input v-model:value="q.answer" type="text" placeholder="Answer"/>
+          <n-input v-model:value="q.answer" type="text" placeholder="Odpowiedź"/>
         </n-form-item>
       </div>
 
       <div style="display: flex; justify-content: flex-end">
-        <n-button round type="primary" color="green" @click="sendAnswer">
-          Send Answer
+        <n-button type="primary" color="green" @click="sendAnswer">
+          Wyślij odpowiedź
         </n-button>
       </div>
     </n-form>
@@ -142,9 +142,9 @@ export default {
         body: JSON.stringify(req),
       })
       if (res.status >= 200 && res.status <300) {
-        alert("Answer Sent")
+        alert("Wysłano odpowiedź")
       } else {
-        alert("Answer Error!")
+        alert("Błąd podczas wysyłania")
       }
       this.id = ""
       this.survey = {}

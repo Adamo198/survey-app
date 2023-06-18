@@ -33,6 +33,7 @@ public class DemoApplication {
 	@EventListener(ApplicationReadyEvent.class)
 	public void doSomethingAfterStartup() {
 		System.out.println("hello world, I have just started up");
+		
 		Role role1 = new Role(ERole.ROLE_USER);
 		Role role2 = new Role(ERole.ROLE_MODERATOR);
 		Role role3 = new Role(ERole.ROLE_ADMIN);
