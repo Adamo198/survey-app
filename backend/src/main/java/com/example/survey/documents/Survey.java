@@ -1,6 +1,7 @@
 package com.example.survey.documents;
 
 //import lombok.Data;
+import com.example.survey.authstuff.User;
 import jakarta.persistence.*;
 import lombok.Data;
 
@@ -21,10 +22,13 @@ public class Survey {
 	private long id;
 	private String title;
 	private String email;
+//	private User owner;
 
 	@OneToMany(fetch = FetchType.LAZY,
 			orphanRemoval = true,
 			cascade = CascadeType.ALL)
 	private List<Question> questions;
 
+	@ManyToOne(fetch = FetchType.EAGER)
+	private User owner;
 }

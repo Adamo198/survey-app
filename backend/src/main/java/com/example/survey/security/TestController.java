@@ -31,4 +31,9 @@ public class TestController {
     public String adminAccess() {
         return "Admin Board.";
     }
+
+    @GetMapping("/survey/search/findByEmail")
+    public String surveysByEmail() {
+        return "Admin Board.";
+    }
 }

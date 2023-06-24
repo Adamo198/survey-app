@@ -122,7 +122,7 @@ export default {
         questions: this.questions
       }
       console.log(surveyReq)
-      const res = await fetch('api/survey',
+      const res = await fetch('http://localhost:9090/api/survey',
           {
             method: 'POST',
             headers: {
