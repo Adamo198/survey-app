@@ -42,7 +42,7 @@ export default {
   methods: {
     async getAnswersBySurveyId(id) {
       const res = await fetch(
-      "/api/answer/search/findAllBySurveyId?surveyId=" + id,
+      "http://localhost:9090/api/answer/search/findAllBySurveyId?surveyId=" + id,
 {method: "GET", 
 headers: {
               'Authorization': getAuthorization()

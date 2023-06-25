@@ -34,6 +34,8 @@
 
 <script>
 import { getAuthorization } from '@/services/auth-header';
+import axios from 'axios';
+
 export default {
   name: 'Profile',
   data() {
@@ -59,7 +61,7 @@ export default {
         id: id
       }
       // console.log(deleteReq)
-      const res = await fetch('api/survey/' + id,
+      const res = await fetch('http://localhost:9090/api/survey/' + id,
           {
             method: 'DELETE',
             headers: {
@@ -82,35 +84,41 @@ export default {
       }
     },
     async loadSurveys() {
-      // e.preventDefault()
-      const deleteReq = {
-        email: this.$store.state.auth.user.email
-      }
-      console.log(deleteReq)
-      const res = await fetch('api/survey/search/findByEmail?email=' + this.$store.state.auth.user.email,
-          {
-            method: 'GET',
-            headers: {
-              'Content-type': 'application/json',
-              'Authorization': getAuthorization()
-            }
-          })
-      if (res.status >= 200 && res.status <300) {
-        //this.email = "";
-        //this.title = "";
-        //this.questions = [];
-        let response = await res.json();
-        console.log(res)
-        console.log('response', response._embedded.survey)
-        this.surveys = response._embedded.survey;
-        // console.log(responseId.id)
-//         alert("Survey deleted!")
-console.log('this surveys');
-console.log(this.surveys);
-      } else {
-      console.log('Could not load user surveys');
-//        alert("Error during send, try again!")
-      }
+      axios
+      .get('http://localhost:9090/api/survey/search/findByOwner_Username?username=' + this.$store.state.auth.user.username, {
+        headers: {
+          'Authorization': getAuthorization()
+        }
+      })
+      .then(response => {
+        let resp = response.data;
+        console.log(resp)
+        console.log('response', response.data._embedded.survey)
+        this.surveys = response.data._embedded.survey;
+        console.log('this surveys');
+        console.log(this.surveys);
+      })
+      .catch(err => {
+        console.log('Could not load user surveys');
+      });
+      // const res = await fetch('api/survey/search/findByEmail?email=' + this.$store.state.auth.user.email,
+      //     {
+      //       method: 'GET',
+      //       headers: {
+      //         'Content-type': 'application/json',
+      //         'Authorization': getAuthorization()
+      //       }
+      //     })
+      // if (res.status >= 200 && res.status <300) {
+      //   let response = await res.json();
+      //   console.log(res)
+      //   console.log('response', response._embedded.survey)
+      //   this.surveys = response._embedded.survey;
+      //   console.log('this surveys');
+      //   console.log(this.surveys);
+      // } else {
+      //   console.log('Could not load user surveys');
+      // }
     }
   },
   created() {

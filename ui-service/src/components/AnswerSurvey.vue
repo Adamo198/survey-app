@@ -118,7 +118,7 @@ export default {
   },
   methods: {
     async findSurvey(id) {
-      const res = await fetch("/api/survey/" + id)
+      const res = await fetch("http://localhost:9090/api/survey/" + id)
       this.id = id
       if (res.status === 200) {
         this.survey = await res.json()
@@ -133,7 +133,7 @@ export default {
         entries: this.prepareAnswerEntry()
       }
       console.log(req)
-      const res = await fetch("/api/answer", {
+      const res = await fetch("http://localhost:9090/api/answer", {
         method: 'POST',
         headers: {
           'Content-type': 'application/json',
